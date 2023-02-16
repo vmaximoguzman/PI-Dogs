@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    wight: {
+    weight: {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
