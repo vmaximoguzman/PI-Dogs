@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID, //Universally Unique IDentifiers
       defaultValue: Sequelize.UUIDV4, //Versión 4 (Más utilizada)
       primaryKey: true,
+      allowNull: false,
     },
     image: {
       type: DataTypes.STRING, //Utilizo URL.
