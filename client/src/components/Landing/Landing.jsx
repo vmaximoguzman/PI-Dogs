@@ -1,10 +1,15 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+//
+import style from "./Landing.module.css";
 
 const Home = () => {
   return (
-    <>
-      <h1>Soy el componente Landing</h1>
-    </>
+    <div className={style.bg}>
+      <NavLink to="/home">
+        <button className={style.button}>Bienvenido al Mundo Perruno</button>
+      </NavLink>
+    </div>
   );
 };
 
