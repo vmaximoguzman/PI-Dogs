@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route } from "react-router-dom";
 //Rutas
 import Landing from "./components/Landing/Landing";
@@ -6,7 +5,7 @@ import Home from "./components/Home/Home";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Route exact path="/">
         <Landing />
       </Route>
