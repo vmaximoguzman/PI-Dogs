@@ -1,0 +1,40 @@
+.navDiv {
+  width: 100%;
+  height: 80px;
+
+  background-color: #ebe6dd;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+
+  font-family: "Kanit";
+}
+
+.divTitle {
+  width: 50%;
+  height: auto;
+}
+
+.titleLink {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  text-decoration: none;
+  color: black;
+
+  cursor: pointer;
+}
+
+.logoDog {
+  width: 17%;
+  height: auto;
+  mix-blend-mode: darken;
+}
+
+.title {
+  font-family: "Kanit";
+  font-size: 22px;
+}
