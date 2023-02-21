@@ -9,19 +9,37 @@ const getDogs = async () => {
     .get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`)
     .then((res) => res.data);
 
-  console.log(dog);
-
   let dogs = [];
 
   dog.forEach((el) => {
-    dogs.push({
-      id: el.id,
-      image: el.image.url,
-      name: el.name,
-      height: el.height.metric,
-      weight: el.weight.metric,
-      lifeSpan: el.life_span,
-    });
+    if (typeof el.temperament === "string") {
+      let temper = el.temperament.split(", ");
+
+      let temperaments = [];
+
+      temper.forEach((el) => {
+        temperaments.push({ name: el });
+      });
+
+      dogs.push({
+        id: el.id,
+        image: el.image.url,
+        name: el.name,
+        height: el.height.metric,
+        weight: el.weight.metric,
+        lifeSpan: el.life_span,
+        temperaments: temperaments,
+      });
+    } else {
+      dogs.push({
+        id: el.id,
+        image: el.image.url,
+        name: el.name,
+        height: el.height.metric,
+        weight: el.weight.metric,
+        lifeSpan: el.life_span,
+      });
+    }
   }); //Llamo solo lo que necesito del perro.
 
   const createdDogs = await Dog.findAll({
@@ -49,6 +67,8 @@ const getDogsID = async (id) => {
       .get(`https://api.thedogapi.com/v1/breeds/${id}?api_key=${API_KEY}`)
       .then((res) => res.data);
 
+    console.log(dogsID);
+
     const urlImage = await axios
       .get("https://api.thedogapi.com/v1/breeds")
       .then((res) => res.data); //Traemos las razas para encontrar la imagen (Ya que el ID solo trae referencia)
@@ -57,14 +77,34 @@ const getDogsID = async (id) => {
       (el) => el.reference_image_id === dogsID.reference_image_id
     ); //Buscamos aquel que concidan los id's de referencia de imagen.
 
-    dog = {
-      id: dogsID.id,
-      image: dogImage.image.url,
-      name: dogsID.name,
-      height: dogsID.height.metric,
-      weight: dogsID.weight.metric,
-      lifeSpan: dogsID.life_span,
-    }; //Pedimos solo lo que necesitamos.
+    if (typeof dogsID.temperament === "string") {
+      let temper = dogsID.temperament.split(", ");
+
+      let temperaments = [];
+
+      temper.forEach((el) => {
+        temperaments.push({ name: el });
+      });
+
+      dog = {
+        id: dogsID.id,
+        image: dogImage.image.url,
+        name: dogsID.name,
+        height: dogsID.height.metric,
+        weight: dogsID.weight.metric,
+        lifeSpan: dogsID.life_span,
+        temperaments: temperaments,
+      };
+    } else {
+      dog = {
+        id: dogsID.id,
+        image: dogImage.image.url,
+        name: dogsID.name,
+        height: dogsID.height.metric,
+        weight: dogsID.weight.metric,
+        lifeSpan: dogsID.life_span,
+      }; //Pedimos solo lo que necesitamos.
+    }
   } else {
     dog = await Dog.findByPk(id, {
       include: {
@@ -119,14 +159,34 @@ const getDogsName = async (name) => {
       (el) => el.reference_image_id === elem.reference_image_id
     );
 
-    dogs.push({
-      id: elem.id,
-      image: dogImage.image.url,
-      name: elem.name,
-      height: elem.height.metric,
-      weight: elem.weight.metric,
-      lifeSpan: elem.life_span,
-    }); //Pedimos solo lo que necesitamos.
+    if (typeof elem.temperament === "string") {
+      let temper = elem.temperament.split(", ");
+
+      let temperaments = [];
+
+      temper.forEach((el) => {
+        temperaments.push({ name: el });
+      });
+
+      dogs.push({
+        id: elem.id,
+        image: dogImage.image.url,
+        name: elem.name,
+        height: elem.height.metric,
+        weight: elem.weight.metric,
+        lifeSpan: elem.life_span,
+        temperaments: temperaments,
+      });
+    } else {
+      dogs.push({
+        id: elem.id,
+        image: dogImage.image.url,
+        name: elem.name,
+        height: elem.height.metric,
+        weight: elem.weight.metric,
+        lifeSpan: elem.life_span,
+      }); //Pedimos solo lo que necesitamos.
+    }
   });
 
   return dogs;
