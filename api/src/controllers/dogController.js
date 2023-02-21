@@ -85,6 +85,7 @@ const getDogsName = async (name) => {
     .get(`https://api.thedogapi.com/v1/breeds/search?q=${name}`)
     .then((res) => res.data);
 
+  //Si se busca un perro creado.
   if (!dogsName.length) {
     const createdName = await Dog.findAll({
       where: {
@@ -98,12 +99,37 @@ const getDogsName = async (name) => {
         },
       },
     });
+    //Busca por nombre e incluye temperamentos.
 
-    if (!createdName.length) throw new Error("No existe tal raza");
-    else return createdName;
+    if (!createdName.length)
+      throw new Error("No existe tal raza"); //Si no lo encuentra, no existe.
+    else return createdName; //Si lo encuentra, devuelve dicha raza.
   }
 
-  return dogsName;
+  //Si se busca un perro dentro de la API.
+  const urlImage = await axios
+    .get("https://api.thedogapi.com/v1/breeds")
+    .then((res) => res.data); //Traemos las razas para encontrar la imagen (Ya que el ID solo trae referencia).
+
+  let dogs = [];
+  let dogImage;
+
+  dogsName.forEach((elem) => {
+    dogImage = urlImage.find(
+      (el) => el.reference_image_id === elem.reference_image_id
+    );
+
+    dogs.push({
+      id: elem.id,
+      image: dogImage.image.url,
+      name: elem.name,
+      height: elem.height.metric,
+      weight: elem.weight.metric,
+      lifeSpan: elem.life_span,
+    }); //Pedimos solo lo que necesitamos.
+  });
+
+  return dogs;
 };
 //POST DOGS
 const postDogs = async (image, name, height, weight, lifeSpan, temper) => {
