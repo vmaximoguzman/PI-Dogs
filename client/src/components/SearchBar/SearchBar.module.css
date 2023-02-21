@@ -1,0 +1,37 @@
+.searchDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50%;
+}
+
+.searchInp {
+  border: 1px solid black;
+  border-radius: 3px;
+
+  background-color: transparent;
+
+  margin-right: 10px;
+}
+
+.searchBtn {
+  color: black;
+
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  animation-name: btn;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes btn {
+  0% {
+    color: black;
+  }
+  100% {
+    color: #e1533c;
+  }
+}
