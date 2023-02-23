@@ -12,34 +12,15 @@ const getDogs = async () => {
   let dogs = [];
 
   dog.forEach((el) => {
-    if (typeof el.temperament === "string") {
-      let temper = el.temperament.split(", ");
-
-      let temperaments = [];
-
-      temper.forEach((el) => {
-        temperaments.push({ name: el });
-      });
-
-      dogs.push({
-        id: el.id,
-        image: el.image.url,
-        name: el.name,
-        height: el.height.metric,
-        weight: el.weight.metric,
-        lifeSpan: el.life_span,
-        temperaments: temperaments,
-      });
-    } else {
-      dogs.push({
-        id: el.id,
-        image: el.image.url,
-        name: el.name,
-        height: el.height.metric,
-        weight: el.weight.metric,
-        lifeSpan: el.life_span,
-      });
-    }
+    dogs.push({
+      id: el.id,
+      image: el.image.url,
+      name: el.name,
+      height: el.height.metric,
+      weight: el.weight.metric,
+      lifeSpan: el.life_span,
+      temperaments: el.temperament,
+    });
   }); //Llamo solo lo que necesito del perro.
 
   const createdDogs = await Dog.findAll({
@@ -77,34 +58,15 @@ const getDogsID = async (id) => {
       (el) => el.reference_image_id === dogsID.reference_image_id
     ); //Buscamos aquel que concidan los id's de referencia de imagen.
 
-    if (typeof dogsID.temperament === "string") {
-      let temper = dogsID.temperament.split(", ");
-
-      let temperaments = [];
-
-      temper.forEach((el) => {
-        temperaments.push({ name: el });
-      });
-
-      dog = {
-        id: dogsID.id,
-        image: dogImage.image.url,
-        name: dogsID.name,
-        height: dogsID.height.metric,
-        weight: dogsID.weight.metric,
-        lifeSpan: dogsID.life_span,
-        temperaments: temperaments,
-      };
-    } else {
-      dog = {
-        id: dogsID.id,
-        image: dogImage.image.url,
-        name: dogsID.name,
-        height: dogsID.height.metric,
-        weight: dogsID.weight.metric,
-        lifeSpan: dogsID.life_span,
-      }; //Pedimos solo lo que necesitamos.
-    }
+    dog = {
+      id: dogsID.id,
+      image: dogImage.image.url,
+      name: dogsID.name,
+      height: dogsID.height.metric,
+      weight: dogsID.weight.metric,
+      lifeSpan: dogsID.life_span,
+      temperaments: dogsID.temperament,
+    }; //Pedimos solo lo que necesitamos.
   } else {
     dog = await Dog.findByPk(id, {
       include: {
@@ -159,34 +121,17 @@ const getDogsName = async (name) => {
       (el) => el.reference_image_id === elem.reference_image_id
     );
 
-    if (typeof elem.temperament === "string") {
-      let temper = elem.temperament.split(", ");
+    console.log(elem);
 
-      let temperaments = [];
-
-      temper.forEach((el) => {
-        temperaments.push({ name: el });
-      });
-
-      dogs.push({
-        id: elem.id,
-        image: dogImage.image.url,
-        name: elem.name,
-        height: elem.height.metric,
-        weight: elem.weight.metric,
-        lifeSpan: elem.life_span,
-        temperaments: temperaments,
-      });
-    } else {
-      dogs.push({
-        id: elem.id,
-        image: dogImage.image.url,
-        name: elem.name,
-        height: elem.height.metric,
-        weight: elem.weight.metric,
-        lifeSpan: elem.life_span,
-      }); //Pedimos solo lo que necesitamos.
-    }
+    dogs.push({
+      id: elem.id,
+      image: dogImage.image.url,
+      name: elem.name,
+      height: elem.height.metric,
+      weight: elem.weight.metric,
+      lifeSpan: elem.life_span,
+      temperaments: elem.temperament,
+    }); //Pedimos solo lo que necesitamos.
   });
 
   return dogs;

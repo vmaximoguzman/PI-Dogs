@@ -1,0 +1,83 @@
+.divPrin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: #ebe6dd;
+
+  width: 100%;
+}
+
+.dogBanner {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 70px;
+}
+
+.bannerImage {
+  width: 90%;
+  aspect-ratio: 2/1;
+}
+
+.dogCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 70px;
+  padding-bottom: 60px;
+  place-items: center;
+
+  width: 100%;
+}
+
+.dogCard {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #e1533c;
+
+  width: 230px;
+
+  border-radius: 5px;
+}
+
+.dogCard:hover {
+  cursor: pointer;
+
+  animation-name: card;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes card {
+  100% {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.276);
+  }
+}
+
+.dogImage {
+  width: 220px;
+  aspect-ratio: 1;
+
+  padding: 5px;
+}
+
+.dogPar {
+  display: block;
+  width: 220px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dogTemper {
+  text-align: center;
+}
+
+.dogPeso {
+  text-align: center;
+}

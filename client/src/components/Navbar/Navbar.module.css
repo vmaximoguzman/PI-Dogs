@@ -10,6 +10,8 @@
   flex-direction: row;
 
   font-family: "Kanit";
+
+  border-bottom: 2px solid #e1dcd1;
 }
 
 .divTitle {
