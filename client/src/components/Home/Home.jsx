@@ -5,25 +5,29 @@ import Navbar from "../Navbar/Navbar";
 import style from "./Home.module.css";
 import Pagination from "../Pagination/Pagination";
 
+console.log();
+
 const Home = (props) => {
   const [dogs, setDogs] = useState([]);
-  const [reload, setReload] = useState(1);
-  //Pagination
+  const [abcReload, setAbcReload] = useState(1);
+  const [weightReload, setWeightReload] = useState();
+
+  //*Pagination
   const totalDogs = dogs.length;
 
   const [dogsPerPage, setDogsPerPage] = useState([8]); //Dogs por página.
   const [currentPage, setCurrentPage] = useState(1); //Página de inicio.
 
   const lastIndex = currentPage * dogsPerPage; //1 * 8 = 8 (Primeros 8 dogs)
-  const firstIndex = lastIndex - dogsPerPage; //
-  //Pagination
+  const firstIndex = lastIndex - dogsPerPage;
+  //*Pagination
 
   useEffect(() => {
     axios.get("http://localhost:3001/dogs").then((res) => setDogs(res.data));
   }, []);
 
-  //Ordenar Alfabeticamente.
-  const onClick = () => {
+  //*Ordenar Z - A.
+  const zToA = () => {
     setDogs(
       dogs.sort((a, b) => {
         const dogA = a.name.toLowerCase();
@@ -38,10 +42,13 @@ const Home = (props) => {
       })
     );
 
-    setReload(reload + 1);
+    if (typeof abcReload === "undefined") setAbcReload(2);
+    else setAbcReload(abcReload + 1);
+    setWeightReload();
   };
 
-  const onChange = () => {
+  //*Ordenar A - Z.
+  const aToZ = () => {
     setDogs(
       dogs.sort((a, b) => {
         const dogA = a.name.toLowerCase();
@@ -56,13 +63,56 @@ const Home = (props) => {
       })
     );
 
-    setReload(reload - 1);
+    if (typeof abcReload === "undefined") setAbcReload(1);
+    else setAbcReload(abcReload - 1);
+    setWeightReload();
   };
 
-  useEffect(() => {
-    console.log("efecto");
-  }, [reload]);
-  //Ordenar Alfabeticamente.
+  //*Ordenar Peso Máximo.
+  const pesoMax = () => {
+    setDogs(
+      dogs.sort((a, b) => {
+        const dogA = Math.floor(a.weight.split(" ")[0]);
+        const dogB = Math.floor(b.weight.split(" ")[0]);
+        //
+        if (dogA === dogB) {
+          return 0;
+        } else if (dogA > dogB) {
+          return -1;
+        }
+        return 1;
+      })
+    );
+
+    if (typeof weightReload === "undefined") setWeightReload(1);
+    else setWeightReload(weightReload - 1);
+    setAbcReload();
+  };
+
+  //*Ordenar Peso Mínimo.
+  const pesoMin = () => {
+    setDogs(
+      dogs.sort((a, b) => {
+        const dogA = Math.floor(a.weight.split(" ")[0]);
+        const dogB = Math.floor(b.weight.split(" ")[0]);
+        //
+        if (dogA === dogB) {
+          return 0;
+        } else if (dogA < dogB) {
+          return -1;
+        }
+        return 1;
+      })
+    );
+
+    if (typeof weightReload === "undefined") setWeightReload(2);
+    else setWeightReload(weightReload + 1);
+    setAbcReload();
+  };
+
+  useEffect(() => {}, [abcReload]); //*Effect para actualizar Dogs.
+
+  useEffect(() => {}, [weightReload]); //*Effect para actualizar Dogs
 
   return (
     <>
@@ -80,18 +130,40 @@ const Home = (props) => {
           <p>Ordenar:</p>
           <div>
             <button
-              onClick={onChange}
-              className={reload === 1 ? style.isCurrent : style.notCurrent}
-              disabled={reload === 1}
+              onClick={aToZ}
+              className={abcReload === 1 ? style.isCurrent : style.notCurrent}
+              disabled={abcReload === 1}
             >
               A - Z
             </button>
             <button
-              onClick={onClick}
-              className={reload === 2 ? style.isCurrent : style.notCurrent}
-              disabled={reload === 2}
+              onClick={zToA}
+              className={abcReload === 2 ? style.isCurrent : style.notCurrent}
+              disabled={abcReload === 2}
             >
               Z - A
+            </button>
+            <button
+              onClick={pesoMin}
+              className={
+                weightReload === 2
+                  ? style.weightCurrent
+                  : style.weightNotCurrent
+              }
+              disabled={weightReload === 2}
+            >
+              Min Peso
+            </button>
+            <button
+              onClick={pesoMax}
+              className={
+                weightReload === 1
+                  ? style.weightCurrent
+                  : style.weightNotCurrent
+              }
+              disabled={weightReload === 1}
+            >
+              Max Peso
             </button>
           </div>
         </div>
@@ -110,7 +182,9 @@ const Home = (props) => {
                   <p className={style.dogTemper}>{dog.temperaments}</p>
                   <div className={style.dogPeso}>
                     <p>Peso:</p>
-                    <p>{dog.weight} kg</p>
+                    <p>
+                      {dog.weight.includes("NaN") ? "5 - 10" : dog.weight} kg
+                    </p>
                   </div>
                 </div>
               );

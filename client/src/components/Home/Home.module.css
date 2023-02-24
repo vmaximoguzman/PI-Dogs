@@ -142,3 +142,49 @@
 .notCurrent:hover {
   color: #e1533c;
 }
+
+.weightCurrent {
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  width: 82px;
+  aspect-ratio: 2/1;
+
+  cursor: pointer;
+
+  color: #e1533c;
+  border: 2px solid #e1533c;
+}
+
+.weightNotCurrent {
+  background: none;
+  border: 1px solid black;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  width: 82px;
+  aspect-ratio: 2/1;
+
+  cursor: pointer;
+}
+
+.weightNotCurrent:hover {
+  color: #e1533c;
+}
