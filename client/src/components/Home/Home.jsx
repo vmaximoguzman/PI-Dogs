@@ -8,7 +8,7 @@ import Pagination from "../Pagination/Pagination";
 const Home = (props) => {
   const [dogs, setDogs] = useState([]);
   const [temper, setTemper] = useState([]);
-  const [dogTemper, setDogTemper] = useState(dogs);
+  const [dogTemper, setDogTemper] = useState([]);
 
   const [abcReload, setAbcReload] = useState(1);
   const [weightReload, setWeightReload] = useState();
