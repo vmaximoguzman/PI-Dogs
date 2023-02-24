@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
 
-  margin-bottom: 70px;
+  margin-bottom: 20px;
 }
 
 .bannerImage {
@@ -37,10 +37,12 @@
 .dogCard {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   background-color: #e1533c;
 
-  width: 230px;
+  width: 250px;
 
   border-radius: 5px;
 }
@@ -61,7 +63,7 @@
 }
 
 .dogImage {
-  width: 220px;
+  width: 240px;
   aspect-ratio: 1;
 
   padding: 5px;
@@ -80,4 +82,63 @@
 
 .dogPeso {
   text-align: center;
+}
+
+.ordenar {
+  display: flex;
+  flex-direction: column;
+  padding-left: 75px;
+
+  margin-bottom: 50px;
+}
+
+.ordenar div {
+  display: flex;
+  gap: 10px;
+}
+
+.isCurrent {
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  width: 60px;
+  aspect-ratio: 2/1;
+
+  cursor: pointer;
+
+  color: #e1533c;
+  border: 2px solid #e1533c;
+}
+
+.notCurrent {
+  background: none;
+  border: 1px solid black;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  width: 60px;
+  aspect-ratio: 2/1;
+
+  cursor: pointer;
+}
+
+.notCurrent:hover {
+  color: #e1533c;
 }

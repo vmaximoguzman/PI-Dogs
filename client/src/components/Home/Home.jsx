@@ -7,6 +7,7 @@ import Pagination from "../Pagination/Pagination";
 
 const Home = (props) => {
   const [dogs, setDogs] = useState([]);
+  const [reload, setReload] = useState(1);
   //Pagination
   const totalDogs = dogs.length;
 
@@ -21,7 +22,47 @@ const Home = (props) => {
     axios.get("http://localhost:3001/dogs").then((res) => setDogs(res.data));
   }, []);
 
-  console.log(dogs);
+  //Ordenar Alfabeticamente.
+  const onClick = () => {
+    setDogs(
+      dogs.sort((a, b) => {
+        const dogA = a.name.toLowerCase();
+        const dogB = b.name.toLowerCase();
+
+        if (dogA > dogB) {
+          return -1;
+        } else if (dogA < dogB) {
+          return 1;
+        }
+        return 0;
+      })
+    );
+
+    setReload(reload + 1);
+  };
+
+  const onChange = () => {
+    setDogs(
+      dogs.sort((a, b) => {
+        const dogA = a.name.toLowerCase();
+        const dogB = b.name.toLowerCase();
+
+        if (dogA < dogB) {
+          return -1;
+        } else if (dogA > dogB) {
+          return 1;
+        }
+        return 0;
+      })
+    );
+
+    setReload(reload - 1);
+  };
+
+  useEffect(() => {
+    console.log("efecto");
+  }, [reload]);
+  //Ordenar Alfabeticamente.
 
   return (
     <>
@@ -34,6 +75,27 @@ const Home = (props) => {
             className={style.bannerImage}
           />
         </div>
+
+        <div className={style.ordenar}>
+          <p>Ordenar:</p>
+          <div>
+            <button
+              onClick={onChange}
+              className={reload === 1 ? style.isCurrent : style.notCurrent}
+              disabled={reload === 1}
+            >
+              A - Z
+            </button>
+            <button
+              onClick={onClick}
+              className={reload === 2 ? style.isCurrent : style.notCurrent}
+              disabled={reload === 2}
+            >
+              Z - A
+            </button>
+          </div>
+        </div>
+
         <div className={style.dogCards}>
           {dogs
             .map((dog) => {
