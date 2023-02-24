@@ -5,10 +5,11 @@ import Navbar from "../Navbar/Navbar";
 import style from "./Home.module.css";
 import Pagination from "../Pagination/Pagination";
 
-console.log();
-
 const Home = (props) => {
   const [dogs, setDogs] = useState([]);
+  const [temper, setTemper] = useState([]);
+  const [dogTemper, setDogTemper] = useState(dogs);
+
   const [abcReload, setAbcReload] = useState(1);
   const [weightReload, setWeightReload] = useState();
 
@@ -23,7 +24,14 @@ const Home = (props) => {
   //*Pagination
 
   useEffect(() => {
-    axios.get("http://localhost:3001/dogs").then((res) => setDogs(res.data));
+    axios.get("http://localhost:3001/dogs").then((res) => {
+      setDogs(res.data);
+      setDogTemper(res.data);
+    });
+
+    axios
+      .get("http://localhost:3001/temper")
+      .then((res) => setTemper(res.data));
   }, []);
 
   //*Ordenar Z - A.
@@ -114,6 +122,18 @@ const Home = (props) => {
 
   useEffect(() => {}, [weightReload]); //*Effect para actualizar Dogs
 
+  //*Filtrar Temperamentos.
+  const filtrarTemper = (e) => {
+    if (e.target.value === "AllDogs") {
+      setDogs(dogTemper);
+    } else {
+      const god = dogTemper.filter(
+        (el) => el.temperaments && el.temperaments.includes(e.target.value)
+      );
+      setDogs(god);
+    }
+  };
+
   return (
     <>
       <Navbar onSearch={props.onSearch} />
@@ -126,9 +146,12 @@ const Home = (props) => {
           />
         </div>
 
-        <div className={style.ordenar}>
-          <p>Ordenar:</p>
-          <div>
+        <div className={style.titFilOrd}>
+          <h3>Ordenar:</h3>
+          <h3>Filtrar:</h3>
+        </div>
+        <div className={style.ordenarFiltrar}>
+          <div className={style.ordenar}>
             <button
               onClick={aToZ}
               className={abcReload === 1 ? style.isCurrent : style.notCurrent}
@@ -165,6 +188,23 @@ const Home = (props) => {
             >
               Max Peso
             </button>
+          </div>
+          <div>
+            <select className={style.filtrar}>
+              <option selected disabled value="select">
+                SELECT TEMPERAMENT
+              </option>
+              <option value="AllDogs" onClick={filtrarTemper}>
+                All Dogs
+              </option>
+              {temper.map((el) => {
+                return (
+                  <option key={el} value={el} onClick={filtrarTemper}>
+                    {el}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
 
