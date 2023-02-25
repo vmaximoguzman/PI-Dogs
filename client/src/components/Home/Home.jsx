@@ -12,6 +12,7 @@ const Home = (props) => {
 
   const [abcReload, setAbcReload] = useState(1);
   const [weightReload, setWeightReload] = useState();
+  const [created, setCreated] = useState(1);
 
   //*Pagination
   const totalDogs = dogs.length;
@@ -134,6 +135,18 @@ const Home = (props) => {
     }
   };
 
+  //*Filtrar Creados.
+  const filtrarCreados = () => {
+    if (created === 1) {
+      setCreated(created + 1);
+      const god = dogTemper.filter((el) => el.id && el.id.length > 4);
+      setDogs(god);
+    } else {
+      setCreated(created - 1);
+      setDogs(dogTemper);
+    }
+  };
+
   return (
     <>
       <Navbar onSearch={props.onSearch} />
@@ -189,8 +202,16 @@ const Home = (props) => {
               Max Peso
             </button>
           </div>
-          <div>
-            <select className={style.filtrar}>
+          <div className={style.filtrar}>
+            <button
+              onClick={filtrarCreados}
+              className={
+                created === 1 ? style.createdNotCurrent : style.createdCurrent
+              }
+            >
+              CREADOS
+            </button>
+            <select className={style.filtrarSelect}>
               <option selected disabled value="select">
                 SELECT TEMPERAMENT
               </option>
