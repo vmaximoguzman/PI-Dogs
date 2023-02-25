@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
-import axios from "axios";
 //Rutas
 import Landing from "./components/Landing/Landing";
 import Home from "./components/Home/Home";
+import Detail from "./components/Detail/Detail";
 
 function App() {
   return (
@@ -13,6 +13,10 @@ function App() {
 
       <Route exact path="/home">
         <Home />
+      </Route>
+
+      <Route path="/dogs/:dogsId">
+        <Detail />
       </Route>
     </div>
   );
