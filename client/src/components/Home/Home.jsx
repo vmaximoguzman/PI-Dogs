@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import style from "./Home.module.css";
 import Pagination from "../Pagination/Pagination";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const [dogs, setDogs] = useState([]);
@@ -250,21 +251,23 @@ const Home = () => {
           {dogs
             .map((dog) => {
               return (
-                <div key={dog.id} className={style.dogCard}>
-                  <img
-                    src={dog.image}
-                    alt={dog.name}
-                    className={style.dogImage}
-                  />
-                  <p className={style.dogPar}>{dog.name.toUpperCase()}</p>
-                  <p className={style.dogTemper}>{dog.temperaments}</p>
-                  <div className={style.dogPeso}>
-                    <p>Peso:</p>
-                    <p>
-                      {dog.weight.includes("NaN") ? "5 - 10" : dog.weight} kg
-                    </p>
+                <NavLink to={`/dogs/${dog.id}`} className={style.detailLink}>
+                  <div key={dog.id} className={style.dogCard}>
+                    <img
+                      src={dog.image}
+                      alt={dog.name}
+                      className={style.dogImage}
+                    />
+                    <p className={style.dogPar}>{dog.name.toUpperCase()}</p>
+                    <p className={style.dogTemper}>{dog.temperaments}</p>
+                    <div className={style.dogPeso}>
+                      <p>Peso:</p>
+                      <p>
+                        {dog.weight.includes("NaN") ? "5 - 10" : dog.weight} kg
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </NavLink>
               );
             })
             .slice(firstIndex, lastIndex)}

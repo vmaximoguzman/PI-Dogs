@@ -1,10 +1,15 @@
 import React from "react";
+//
+import Navbar from "../Navbar/Navbar";
 
 const Detail = () => {
   return (
-    <div>
-      <h3>Detalle</h3>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h3>Detalle</h3>
+      </div>
+    </>
   );
 };
 

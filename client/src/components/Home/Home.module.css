@@ -237,3 +237,8 @@
 .createdNotCurrent:hover {
   color: #e1533c;
 }
+
+.detailLink {
+  color: black;
+  text-decoration: none;
+}
