@@ -15,7 +15,7 @@ function App() {
         <Home />
       </Route>
 
-      <Route path="/dogs/:dogsId">
+      <Route path="/dogs/:dogId">
         <Detail />
       </Route>
     </div>

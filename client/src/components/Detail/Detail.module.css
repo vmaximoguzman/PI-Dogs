@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Kanit";
+}
+
+.detailDiv {
+  width: 100%;
+  height: 100vh;
+
+  background-color: #ebe6dd;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.detailCard {
+  width: 80%;
+  height: 80%;
+  background-color: #e1533c;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  border-radius: 10px;
+}
+
+.divNameImage {
+  display: flex;
+  flex-direction: column;
+}
+
+.nameId {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.dogName {
+  font-size: 4rem;
+}
+
+.dogImage {
+  width: 40rem;
+  aspect-ratio: 3/2;
+
+  border-radius: 10px;
+}
+
+.divNameOthers {
+  width: 30%;
+  height: auto;
+  text-align: center;
+}

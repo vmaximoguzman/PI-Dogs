@@ -177,8 +177,8 @@ const Home = () => {
         </div>
 
         <div className={style.titFilOrd}>
-          <h3>Ordenar:</h3>
-          <h3>Filtrar:</h3>
+          <h3>Order By:</h3>
+          <h3>Filter By:</h3>
         </div>
 
         <div className={style.ordenarFiltrar}>
@@ -206,7 +206,7 @@ const Home = () => {
               }
               disabled={weightReload === 2}
             >
-              Min Peso
+              Min Weight
             </button>
             <button
               onClick={pesoMax}
@@ -217,7 +217,7 @@ const Home = () => {
               }
               disabled={weightReload === 1}
             >
-              Max Peso
+              Max Weight
             </button>
           </div>
           <div className={style.filtrar}>
@@ -227,7 +227,7 @@ const Home = () => {
                 created === 1 ? style.createdNotCurrent : style.createdCurrent
               }
             >
-              CREADOS
+              DOGS CREATED
             </button>
             <select className={style.filtrarSelect}>
               <option selected disabled value="select">
@@ -251,8 +251,12 @@ const Home = () => {
           {dogs
             .map((dog) => {
               return (
-                <NavLink to={`/dogs/${dog.id}`} className={style.detailLink}>
-                  <div key={dog.id} className={style.dogCard}>
+                <NavLink
+                  to={`/dogs/${dog.id}`}
+                  className={style.detailLink}
+                  key={dog.id}
+                >
+                  <div className={style.dogCard}>
                     <img
                       src={dog.image}
                       alt={dog.name}
@@ -261,7 +265,7 @@ const Home = () => {
                     <p className={style.dogPar}>{dog.name.toUpperCase()}</p>
                     <p className={style.dogTemper}>{dog.temperaments}</p>
                     <div className={style.dogPeso}>
-                      <p>Peso:</p>
+                      <p>Weight:</p>
                       <p>
                         {dog.weight.includes("NaN") ? "5 - 10" : dog.weight} kg
                       </p>
