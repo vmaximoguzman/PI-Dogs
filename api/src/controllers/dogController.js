@@ -34,7 +34,20 @@ const getDogs = async () => {
   });
 
   createdDogs.forEach((el) => {
-    dogs.push(el);
+    const cleanTemper = el.temperaments.map((el) => el.name);
+    const temperament = cleanTemper.join(", ");
+
+    const newDog = {
+      id: el.id,
+      image: el.image,
+      name: el.name,
+      height: el.height,
+      weight: el.weight,
+      lifeSpan: el.lifeSpan,
+      temperaments: temperament,
+    };
+
+    dogs.push(newDog);
   });
 
   return dogs;
@@ -68,7 +81,7 @@ const getDogsID = async (id) => {
       temperaments: dogsID.temperament,
     }; //Pedimos solo lo que necesitamos.
   } else {
-    dog = await Dog.findByPk(id, {
+    const createdDog = await Dog.findByPk(id, {
       include: {
         model: Temperaments,
         attributes: ["name"],
@@ -77,6 +90,19 @@ const getDogsID = async (id) => {
         },
       },
     });
+
+    const cleanTemper = createdDog.temperaments.map((el) => el.name);
+    const temperament = cleanTemper.join(", ");
+
+    dog = {
+      id: createdDog.id,
+      image: createdDog.image,
+      name: createdDog.name,
+      height: createdDog.height,
+      weight: createdDog.weight,
+      lifeSpan: createdDog.lifeSpan,
+      temperaments: temperament,
+    };
   }
 
   return dog;
@@ -101,11 +127,29 @@ const getDogsName = async (name) => {
         },
       },
     });
-    //Busca por nombre e incluye temperamentos.
+
+    let dogs;
+
+    createdName.forEach((el) => {
+      const cleanTemper = el.temperaments.map((el) => el.name);
+      const temperament = cleanTemper.join(", ");
+
+      dogs = {
+        id: el.id,
+        image: el.image,
+        name: el.name,
+        height: el.height,
+        weight: el.weight,
+        lifeSpan: el.lifeSpan,
+        temperaments: temperament,
+      };
+    });
+
+    // Busca por nombre e incluye temperamentos.
 
     if (!createdName.length)
       throw new Error("No existe tal raza"); //Si no lo encuentra, no existe.
-    else return createdName; //Si lo encuentra, devuelve dicha raza.
+    else return dogs; //Si lo encuentra, devuelve dicha raza.
   }
 
   //Si se busca un perro dentro de la API.
@@ -138,10 +182,10 @@ const getDogsName = async (name) => {
 };
 //POST DOGS
 const postDogs = async (image, name, height, weight, lifeSpan, temper) => {
-  const newDog = await Dog.create({ image, name, height, weight, lifeSpan });
-  await newDog.addTemperaments(temper);
+  const createDog = await Dog.create({ image, name, height, weight, lifeSpan });
+  await createDog.addTemperaments(temper);
 
-  return newDog;
+  return createDog;
 };
 //
 
