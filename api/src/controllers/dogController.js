@@ -165,7 +165,17 @@ const getDogsName = async (name) => {
       (el) => el.reference_image_id === elem.reference_image_id
     );
 
-    console.log(elem);
+    if (
+      !elem.id ||
+      !dogImage ||
+      !elem.name ||
+      !elem.height.metric ||
+      !elem.weight.metric ||
+      !elem.life_span ||
+      !elem.temperament
+    ) {
+      return;
+    }
 
     dogs.push({
       id: elem.id,

@@ -4,10 +4,13 @@ import { NavLink } from "react-router-dom";
 import style from "./Navbar.module.css";
 import SearchBar from "../SearchBar/SearchBar";
 
-const Navbar = (props) => {
+const Navbar = ({ onSearch, refresh }) => {
   return (
     <div className={style.navDiv}>
-      <div className={style.divTitle}>
+      <div
+        className={style.divTitle}
+        onClick={window.location.pathname === "/home" ? refresh : null}
+      >
         <NavLink to="/home" className={style.titleLink}>
           <img
             src="https://static.vecteezy.com/system/resources/previews/007/559/104/original/dog-dish-menu-logo-design-template-modern-animal-icon-label-for-store-veterinary-food-free-vector.jpg"
@@ -19,7 +22,7 @@ const Navbar = (props) => {
       </div>
 
       <div>
-        <SearchBar onSearch={props.onSearch} />
+        <SearchBar onSearch={onSearch} />
       </div>
     </div>
   );

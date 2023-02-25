@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //
 import style from "./SearchBar.module.css";
 
-const SearchBar = (props) => {
+const SearchBar = ({ onSearch }) => {
   const [dog, setDog] = useState("");
 
   const handleChange = (event) => {
@@ -19,7 +19,7 @@ const SearchBar = (props) => {
         value={dog}
         onChange={handleChange}
       />
-      <p className={style.searchBtn} onClick={() => props.onSearch(dog)}>
+      <p className={style.searchBtn} onClick={() => onSearch(dog)}>
         BUSCAR
       </p>
     </div>

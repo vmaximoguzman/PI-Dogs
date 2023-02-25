@@ -5,7 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import style from "./Home.module.css";
 import Pagination from "../Pagination/Pagination";
 
-const Home = (props) => {
+const Home = () => {
   const [dogs, setDogs] = useState([]);
   const [temper, setTemper] = useState([]);
   const [dogTemper, setDogTemper] = useState([]);
@@ -147,9 +147,25 @@ const Home = (props) => {
     }
   };
 
+  //*Buscar Dog.
+  const onSearch = (dog) => {
+    axios
+      .get(`http://localhost:3001/dogs?name=${dog}`)
+      .then((res) => setDogs(res.data))
+      .catch(() =>
+        alert("Lo lamento. Pero no hemos encontrado un perro de dicha raza.")
+      );
+  };
+
+  //*Refrescar Página.
+  const refresh = () => {
+    window.location.reload(true);
+  };
+
   return (
     <>
-      <Navbar onSearch={props.onSearch} />
+      <Navbar onSearch={onSearch} refresh={refresh} />
+
       <div className={style.divPrin}>
         <div className={style.dogBanner}>
           <img
@@ -163,6 +179,7 @@ const Home = (props) => {
           <h3>Ordenar:</h3>
           <h3>Filtrar:</h3>
         </div>
+
         <div className={style.ordenarFiltrar}>
           <div className={style.ordenar}>
             <button
