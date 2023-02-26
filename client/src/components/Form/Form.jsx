@@ -3,10 +3,16 @@ import axios from "axios";
 //
 import Navbar from "../Navbar/Navbar";
 import style from "./Form.module.css";
+import {
+  validationDog,
+  validationWeight,
+  validationHeight,
+} from "./validation";
 
 const Form = () => {
   const [temper, setTemper] = useState([]);
 
+  //*Dog
   const [dog, setDog] = useState({
     image: "",
     name: "",
@@ -16,15 +22,36 @@ const Form = () => {
     temperaments: [],
   });
 
+  const [errorsDog, setErrorsDog] = useState({
+    image: "",
+    name: "",
+    lifeSpan: "",
+    temperaments: [],
+  });
+
+  //*Weight
   const [weight, setWeight] = useState({
     weightMin: "",
     weightMax: "",
   });
 
+  const [errorsWeight, setErrorsWeight] = useState({
+    weightMin: "",
+    weightMax: "",
+  });
+
+  //*Height
   const [height, setHeight] = useState({
     heightMin: "",
     heightMax: "",
   });
+
+  const [errorsHeight, setErrorsHeight] = useState({
+    heightMin: "",
+    heightMax: "",
+  });
+
+  //-
 
   useEffect(() => {
     axios
@@ -38,15 +65,26 @@ const Form = () => {
       ...dog,
       [e.target.name]: e.target.value,
     });
+    setErrorsDog(
+      validationDog({
+        ...dog,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   //*Weight
-
   const handleWeight = (e) => {
     setWeight({
       ...weight,
       [e.target.name]: e.target.value,
     });
+    setErrorsWeight(
+      validationWeight({
+        ...weight,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
   let peso = weight.weightMin + " - " + weight.weightMax;
 
@@ -56,6 +94,12 @@ const Form = () => {
       ...height,
       [e.target.name]: e.target.value,
     });
+    setErrorsHeight(
+      validationHeight({
+        ...height,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
   let altura = height.heightMin + " - " + height.heightMax;
 
@@ -63,11 +107,8 @@ const Form = () => {
   const handleTemper = (e) => {
     const temperament = temper.indexOf(e.target.value) + 1;
 
-    console.log(temperament);
-
     dog.temperaments.push(temperament);
   };
-  console.log(dog);
 
   //*OnSubmit
   const onSubmit = (e) => {
@@ -80,8 +121,6 @@ const Form = () => {
       lifeSpan: dog.lifeSpan + " years",
     });
   };
-
-  console.log(dog);
 
   return (
     <>
@@ -99,6 +138,7 @@ const Form = () => {
             className={style.formInput}
             onChange={handleNaImLs}
           />
+          {errorsDog.name && <p style={{ color: "green" }}>{errorsDog.name}</p>}
 
           <label className={style.formLabel}>Image</label>
           <input
@@ -108,6 +148,9 @@ const Form = () => {
             className={style.formInputImg}
             onChange={handleNaImLs}
           />
+          {errorsDog.image && (
+            <p style={{ color: "green" }}>{errorsDog.image}</p>
+          )}
 
           <div className={style.minMax}>
             <div className={style.labelWH}>
@@ -123,6 +166,9 @@ const Form = () => {
                 className={style.formInput}
                 onChange={handleWeight}
               />
+              {errorsWeight.weightMin && (
+                <p style={{ color: "green" }}>{errorsWeight.weightMin}</p>
+              )}
 
               <input
                 type="text"
@@ -131,6 +177,9 @@ const Form = () => {
                 className={style.formInput}
                 onChange={handleWeight}
               />
+              {errorsWeight.weightMax && (
+                <p style={{ color: "green" }}>{errorsWeight.weightMax}</p>
+              )}
             </div>
           </div>
 
@@ -147,6 +196,10 @@ const Form = () => {
                 className={style.formInput}
                 onChange={handleHeight}
               />
+              {errorsHeight.heightMin && (
+                <p style={{ color: "green" }}>{errorsHeight.heightMin}</p>
+              )}
+
               <input
                 type="text"
                 value={height.heightMax}
@@ -154,6 +207,9 @@ const Form = () => {
                 className={style.formInput}
                 onChange={handleHeight}
               />
+              {errorsHeight.heightMax && (
+                <p style={{ color: "green" }}>{errorsHeight.heightMax}</p>
+              )}
             </div>
           </div>
 
@@ -165,6 +221,9 @@ const Form = () => {
             className={style.formInput}
             onChange={handleNaImLs}
           />
+          {errorsDog.lifeSpan && (
+            <p style={{ color: "green" }}>{errorsDog.lifeSpan}</p>
+          )}
 
           <label className={style.formLabel}>Temperaments*</label>
           <select className={style.formSelect} onChange={handleTemper}>
@@ -176,6 +235,9 @@ const Form = () => {
               );
             })}
           </select>
+          {errorsDog.temperaments && (
+            <p style={{ color: "green" }}>{errorsDog.temperaments}</p>
+          )}
 
           <button
             onClick={() => window.alert("Breed Creada")}
