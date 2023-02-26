@@ -192,10 +192,28 @@ const getDogsName = async (name) => {
 };
 //POST DOGS
 const postDogs = async (image, name, height, weight, lifeSpan, temper) => {
-  const createDog = await Dog.create({ image, name, height, weight, lifeSpan });
-  await createDog.addTemperaments(temper);
+  if (image) {
+    const createDog = await Dog.create({
+      image,
+      name,
+      height,
+      weight,
+      lifeSpan,
+    });
+    await createDog.addTemperaments(temper);
 
-  return createDog;
+    return createDog;
+  } else {
+    const newDog = await Dog.create({
+      name,
+      height,
+      weight,
+      lifeSpan,
+    });
+    await newDog.addTemperaments(temper);
+
+    return newDog;
+  }
 };
 //
 

@@ -33,19 +33,20 @@
   flex-direction: column;
 }
 
-.nameId {
+.nameDiv {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
 }
 
 .dogName {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .dogImage {
   width: 40rem;
-  aspect-ratio: 3/2;
+  aspect-ratio: 4/3;
+  /* aspect-ratio: 3/2; */
 
   border-radius: 10px;
 }

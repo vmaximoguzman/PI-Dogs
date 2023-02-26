@@ -176,6 +176,12 @@ const Home = () => {
           />
         </div>
 
+        <div className={style.createDog}>
+          <NavLink to="/createDog">
+            <button className={style.createDogBtn}>Create a New Breed</button>
+          </NavLink>
+        </div>
+
         <div className={style.titFilOrd}>
           <h3>Order By:</h3>
           <h3>Filter By:</h3>

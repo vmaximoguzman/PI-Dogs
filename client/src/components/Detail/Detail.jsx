@@ -24,9 +24,8 @@ const Detail = () => {
       <div className={style.detailDiv}>
         <div className={style.detailCard}>
           <div className={style.divNameImage}>
-            <div className={style.nameId}>
+            <div className={style.nameDiv}>
               <h1 className={style.dogName}>{dog.name}</h1>
-              <h2>Breed: #{dog.id}</h2>
             </div>
             <img src={dog.image} alt={dog.name} className={style.dogImage} />
           </div>

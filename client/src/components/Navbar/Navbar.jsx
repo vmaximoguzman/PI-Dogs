@@ -36,7 +36,9 @@ const Navbar = ({ onSearch, refresh }) => {
                 : style.logoDetailDog
             }
           />
-          <h3 className={style.title}>Mundo Perruno</h3>
+          <h3 className={style.title}>
+            {window.location.pathname === "/home" ? "Mundo Perruno" : "Home"}
+          </h3>
         </NavLink>
       </div>
 

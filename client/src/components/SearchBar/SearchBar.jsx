@@ -9,8 +9,6 @@ const SearchBar = ({ onSearch }) => {
     setDog(event.target.value);
   };
 
-  console.log(dog);
-
   return (
     <div className={style.searchDiv}>
       <input
