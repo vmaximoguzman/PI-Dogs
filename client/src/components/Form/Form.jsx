@@ -138,7 +138,9 @@ const Form = () => {
             className={style.formInput}
             onChange={handleNaImLs}
           />
-          {errorsDog.name && <p style={{ color: "green" }}>{errorsDog.name}</p>}
+          {errorsDog.name && (
+            <p className={style.validation}>{errorsDog.name}</p>
+          )}
 
           <label className={style.formLabel}>Image</label>
           <input
@@ -149,16 +151,13 @@ const Form = () => {
             onChange={handleNaImLs}
           />
           {errorsDog.image && (
-            <p style={{ color: "green" }}>{errorsDog.image}</p>
+            <p className={style.validation}>{errorsDog.image}</p>
           )}
 
-          <div className={style.minMax}>
-            <div className={style.labelWH}>
+          <div className={style.weightHeight}>
+            <div className={style.min}>
               <label className={style.formLabel}>Min Weight*</label>
-              <label className={style.formLabel}>Max Weight*</label>
-            </div>
 
-            <div className={style.inputWH}>
               <input
                 type="text"
                 value={weight.weightMin}
@@ -167,28 +166,10 @@ const Form = () => {
                 onChange={handleWeight}
               />
               {errorsWeight.weightMin && (
-                <p style={{ color: "green" }}>{errorsWeight.weightMin}</p>
+                <p className={style.validation}>{errorsWeight.weightMin}</p>
               )}
 
-              <input
-                type="text"
-                value={weight.weightMax}
-                name="weightMax"
-                className={style.formInput}
-                onChange={handleWeight}
-              />
-              {errorsWeight.weightMax && (
-                <p style={{ color: "green" }}>{errorsWeight.weightMax}</p>
-              )}
-            </div>
-          </div>
-
-          <div className={style.minMax}>
-            <div className={style.labelWH}>
               <label className={style.formLabel}>Min Height*</label>
-              <label className={style.formLabel}>Max Height*</label>
-            </div>
-            <div className={style.inputWH}>
               <input
                 type="text"
                 value={height.heightMin}
@@ -197,9 +178,23 @@ const Form = () => {
                 onChange={handleHeight}
               />
               {errorsHeight.heightMin && (
-                <p style={{ color: "green" }}>{errorsHeight.heightMin}</p>
+                <p className={style.validation}>{errorsHeight.heightMin}</p>
+              )}
+            </div>
+            <div className={style.max}>
+              <label className={style.formLabel}>Max Weight*</label>
+              <input
+                type="text"
+                value={weight.weightMax}
+                name="weightMax"
+                className={style.formInput}
+                onChange={handleWeight}
+              />
+              {errorsWeight.weightMax && (
+                <p className={style.validation}>{errorsWeight.weightMax}</p>
               )}
 
+              <label className={style.formLabel}>Max Height*</label>
               <input
                 type="text"
                 value={height.heightMax}
@@ -208,7 +203,7 @@ const Form = () => {
                 onChange={handleHeight}
               />
               {errorsHeight.heightMax && (
-                <p style={{ color: "green" }}>{errorsHeight.heightMax}</p>
+                <p className={style.validation}>{errorsHeight.heightMax}</p>
               )}
             </div>
           </div>
@@ -222,7 +217,7 @@ const Form = () => {
             onChange={handleNaImLs}
           />
           {errorsDog.lifeSpan && (
-            <p style={{ color: "green" }}>{errorsDog.lifeSpan}</p>
+            <p className={style.validation}>{errorsDog.lifeSpan}</p>
           )}
 
           <label className={style.formLabel}>Temperaments*</label>
@@ -236,7 +231,7 @@ const Form = () => {
             })}
           </select>
           {errorsDog.temperaments && (
-            <p style={{ color: "green" }}>{errorsDog.temperaments}</p>
+            <p className={style.validation}>{errorsDog.temperaments}</p>
           )}
 
           <button

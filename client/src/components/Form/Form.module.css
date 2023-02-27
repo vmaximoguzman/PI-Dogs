@@ -1,6 +1,9 @@
 .form {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
+
+  padding: 35px 0;
 
   background-color: #ebe6dd;
 
@@ -11,7 +14,9 @@
 
 .formCard {
   width: 35%;
-  height: 92%;
+  height: 100%;
+
+  padding: 35px 0;
 
   display: flex;
   justify-content: center;
@@ -51,31 +56,27 @@
   padding: 5px;
 }
 
-.minMax {
-  width: 100%;
+.weightHeight {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
 
+  column-gap: 40px;
+}
+
+.min {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  padding: 0 100px;
 }
 
-.labelWH {
-  width: 110%;
-
+.max {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-}
-
-.inputWH {
-  width: 110%;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column;
 }
 
 .submitBtn {
@@ -113,4 +114,10 @@
   text-align: center;
 
   padding: 5px 25px;
+}
+
+/** Validation. */
+.validation {
+  color: #ebe6dd;
+  text-align: center;
 }
