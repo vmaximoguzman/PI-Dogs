@@ -10,7 +10,10 @@ import {
 } from "./validation";
 
 const Form = () => {
+  //*Temperaments
   const [temper, setTemper] = useState([]);
+
+  const [dogTemperaments, setDogTemperaments] = useState([]);
 
   //*Dog
   const [dog, setDog] = useState({
@@ -104,11 +107,29 @@ const Form = () => {
   let altura = height.heightMin + " - " + height.heightMax;
 
   //*Temperaments
+  let temperament = [];
   const handleTemper = (e) => {
-    const temperament = temper.indexOf(e.target.value) + 1;
+    const indexTemper = temper.indexOf(e.target.value) + 1;
+    temperament.push(indexTemper);
 
-    dog.temperaments.push(temperament);
+    setDogTemperaments([...dogTemperaments, e.target.value]);
+
+    dog.temperaments.push(indexTemper);
+    setErrorsDog(
+      validationDog({
+        ...dog,
+        [e.target.name]: indexTemper,
+      })
+    );
   };
+
+  const closeTemper = (e) => {
+    setDogTemperaments(dogTemperaments.filter((el) => e.target.value !== el));
+  };
+
+  useEffect(() => {
+    console.log(dogTemperaments);
+  }, [dogTemperaments]);
 
   //*OnSubmit
   const onSubmit = (e) => {
@@ -121,6 +142,8 @@ const Form = () => {
       lifeSpan: dog.lifeSpan + " years",
     });
   };
+
+  console.log(dog);
 
   return (
     <>
@@ -222,14 +245,30 @@ const Form = () => {
 
           <label className={style.formLabel}>Temperaments*</label>
           <select className={style.formSelect} onChange={handleTemper}>
+            <option disabled selected>
+              SELECT A TEMPERAMENT
+            </option>
             {temper.map((el) => {
               return (
-                <option value={el} key={el}>
+                <option value={el} key={el} name="temperaments">
                   {el}
                 </option>
               );
             })}
           </select>
+          <div className={style.dogTemperaments}>
+            {dogTemperaments &&
+              dogTemperaments.map((el) => {
+                return (
+                  <div key={el} className={style.temperamentEl}>
+                    <button value={el} onClick={closeTemper}>
+                      X
+                    </button>
+                    <p>{el}</p>
+                  </div>
+                );
+              })}
+          </div>
           {errorsDog.temperaments && (
             <p className={style.validation}>{errorsDog.temperaments}</p>
           )}

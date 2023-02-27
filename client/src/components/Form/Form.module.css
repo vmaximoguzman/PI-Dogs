@@ -116,6 +116,35 @@
   padding: 5px 25px;
 }
 
+.dogTemperaments {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
+  row-gap: 10px;
+
+  padding-top: 15px;
+}
+
+.temperamentEl {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: 2px solid black;
+  border-radius: 10px;
+
+  padding: 5px 10px;
+}
+
+.temperamentEl button {
+  background-color: transparent;
+  color: black;
+  border: none;
+
+  cursor: pointer;
+}
+
 /** Validation. */
 .validation {
   color: #ebe6dd;
