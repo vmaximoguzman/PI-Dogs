@@ -37,7 +37,7 @@ const Navbar = ({ onSearch, refresh }) => {
             }
           />
           <h3 className={style.title}>
-            {window.location.pathname === "/home" ? "Mundo Perruno" : "Home"}
+            {window.location.pathname === "/home" ? "Doggie World" : "Home"}
           </h3>
         </NavLink>
       </div>

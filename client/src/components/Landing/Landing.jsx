@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className={style.bg}>
       <NavLink to="/home">
-        <button className={style.button}>Bienvenido al Mundo Perruno</button>
+        <button className={style.button}>Welcome to the Doggie World</button>
       </NavLink>
     </div>
   );

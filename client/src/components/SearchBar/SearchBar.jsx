@@ -18,7 +18,7 @@ const SearchBar = ({ onSearch }) => {
         onChange={handleChange}
       />
       <p className={style.searchBtn} onClick={() => onSearch(dog)}>
-        BUSCAR
+        SEARCH
       </p>
     </div>
   );
