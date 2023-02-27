@@ -12,8 +12,8 @@ const validationDog = (dog) => {
   } else if (/^[A-Za-z]*$/.test(dog.lifeSpan)) {
     errorsDog.lifeSpan = "This field must only contain numbers.";
   }
-  if (dog.temperaments.length === 0) {
-    errorsDog.temperaments = "This field is required.";
+  if (dog.temper.length === 0) {
+    errorsDog.temper = "This field is required.";
   }
 
   return errorsDog;
@@ -40,6 +40,7 @@ const validationWeight = (weight) => {
 const validationHeight = (height) => {
   let errorsHeight = {};
 
+  //*Error Height
   if (!height.heightMin) {
     errorsHeight.heightMin = "This field is required.";
   } else if (/^[A-Za-z]*$/.test(height.heightMin)) {

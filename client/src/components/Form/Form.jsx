@@ -11,7 +11,7 @@ import {
 
 const Form = () => {
   //*Temperaments
-  const [temper, setTemper] = useState([]);
+  const [temperaments, setTemperaments] = useState([]);
 
   const [dogTemperaments, setDogTemperaments] = useState([]);
 
@@ -22,14 +22,14 @@ const Form = () => {
     height: "",
     weight: "",
     lifeSpan: "",
-    temperaments: [],
+    temper: [],
   });
 
   const [errorsDog, setErrorsDog] = useState({
     image: "",
     name: "",
     lifeSpan: "",
-    temperaments: [],
+    temper: [],
   });
 
   //*Weight
@@ -59,7 +59,7 @@ const Form = () => {
   useEffect(() => {
     axios
       .get("http://localhost:3001/temper")
-      .then((res) => setTemper(res.data));
+      .then((res) => setTemperaments(res.data));
   }, []);
 
   //*Name - Image - LifeSpan
@@ -89,7 +89,13 @@ const Form = () => {
       })
     );
   };
-  let peso = weight.weightMin + " - " + weight.weightMax;
+
+  useEffect(() => {
+    setDog({
+      ...dog,
+      weight: weight.weightMin + " - " + weight.weightMax,
+    });
+  }, [weight]);
 
   //*Height
   const handleHeight = (e) => {
@@ -104,17 +110,24 @@ const Form = () => {
       })
     );
   };
-  let altura = height.heightMin + " - " + height.heightMax;
+
+  useEffect(() => {
+    setDog({
+      ...dog,
+      height: height.heightMin + " - " + height.heightMax,
+    });
+  }, [height]);
 
   //*Temperaments
-  let temperament = [];
   const handleTemper = (e) => {
-    const indexTemper = temper.indexOf(e.target.value) + 1;
-    temperament.push(indexTemper);
+    const indexTemper = temperaments.indexOf(e.target.value) + 1;
 
     setDogTemperaments([...dogTemperaments, e.target.value]);
 
-    dog.temperaments.push(indexTemper);
+    setDog({
+      ...dog,
+      temper: [...dog.temper, indexTemper],
+    });
     setErrorsDog(
       validationDog({
         ...dog,
@@ -135,12 +148,12 @@ const Form = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    setDog({
-      ...dog,
-      weight: peso,
-      height: altura,
-      lifeSpan: dog.lifeSpan + " years",
-    });
+    axios
+      .post("http://localhost:3001/dogs", {
+        ...dog,
+        lifeSpan: dog.lifeSpan + " years",
+      })
+      .then((res) => console.log(res.data));
   };
 
   console.log(dog);
@@ -248,7 +261,7 @@ const Form = () => {
             <option disabled selected>
               SELECT A TEMPERAMENT
             </option>
-            {temper.map((el) => {
+            {temperaments.map((el) => {
               return (
                 <option value={el} key={el} name="temperaments">
                   {el}
@@ -269,12 +282,12 @@ const Form = () => {
                 );
               })}
           </div>
-          {errorsDog.temperaments && (
-            <p className={style.validation}>{errorsDog.temperaments}</p>
+          {errorsDog.temper && (
+            <p className={style.validation}>{errorsDog.temper}</p>
           )}
 
           <button
-            onClick={() => window.alert("Breed Creada")}
+            onClick={() => window.alert("Breed Created")}
             className={style.submitBtn}
           >
             Submit

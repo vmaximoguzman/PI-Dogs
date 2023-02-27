@@ -152,7 +152,13 @@ const Home = () => {
   const onSearch = (dog) => {
     axios
       .get(`http://localhost:3001/dogs?name=${dog}`)
-      .then((res) => setDogs(res.data))
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setDogs(res.data);
+        } else {
+          setDogs([res.data]);
+        }
+      })
       .catch(() =>
         alert("Lo lamento. Pero no hemos encontrado un perro de dicha raza.")
       );
@@ -183,7 +189,7 @@ const Home = () => {
         </div>
 
         <div className={style.titFilOrd}>
-          <h3>Order By:</h3>
+          <h3>Sort By:</h3>
           <h3>Filter By:</h3>
         </div>
 
