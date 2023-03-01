@@ -113,28 +113,80 @@ const getDogsName = async (name) => {
     .get(`https://api.thedogapi.com/v1/breeds/search?q=${name}`)
     .then((res) => res.data);
 
-  //Si se busca un perro creado.
-  if (!dogsName.length) {
-    const createdName = await Dog.findAll({
-      where: {
-        name: { [Op.iLike]: `%${name}%` },
+  const createdName = await Dog.findAll({
+    where: {
+      name: { [Op.iLike]: `%${name}%` },
+    },
+    include: {
+      model: Temperaments,
+      attributes: ["name"],
+      through: {
+        attributes: [],
       },
-      include: {
-        model: Temperaments,
-        attributes: ["name"],
-        through: {
-          attributes: [],
-        },
-      },
+    },
+  });
+
+  let dogs = [];
+
+  //En caso de que exista en la API.
+  if (dogsName) {
+    const urlImage = await axios
+      .get("https://api.thedogapi.com/v1/breeds")
+      .then((res) => res.data); //Traemos las razas para encontrar la imagen (Ya que el NAME solo trae referencia).
+
+    dogsName.forEach((elem) => {
+      let dogImage = urlImage.find(
+        (el) => el.reference_image_id === elem.reference_image_id
+      );
+
+      //Hay casos donde faltan datos que no pueden ser null.
+      if (
+        !elem.id ||
+        !dogImage ||
+        !elem.name ||
+        !elem.height.metric ||
+        !elem.weight.metric ||
+        !elem.life_span ||
+        !elem.temperament
+      )
+        return;
+
+      dogs.push({
+        id: elem.id,
+        image: dogImage.image.url,
+        name: elem.name,
+        height: elem.height.metric,
+        weight: elem.weight.metric,
+        lifeSpan: elem.life_span,
+        temperaments: elem.temperament,
+      }); //Pedimos solo lo que necesitamos.
     });
 
-    let dogs;
+    //En caso de que tambien exista en la DB.
+    if (createdName) {
+      createdName.forEach((el) => {
+        const cleanTemper = el.temperaments.map((el) => el.name);
+        const temperament = cleanTemper.join(", ");
 
+        dogs.push({
+          id: el.id,
+          image: el.image,
+          name: el.name,
+          height: el.height,
+          weight: el.weight,
+          lifeSpan: el.lifeSpan,
+          temperaments: temperament,
+        }); //Pedimos solo lo que necesitamos.
+      });
+    }
+
+    //En caso de que no exista en la API, pero sí en DB.
+  } else if (createdName) {
     createdName.forEach((el) => {
       const cleanTemper = el.temperaments.map((el) => el.name);
       const temperament = cleanTemper.join(", ");
 
-      dogs = {
+      dogs.push({
         id: el.id,
         image: el.image,
         name: el.name,
@@ -142,51 +194,13 @@ const getDogsName = async (name) => {
         weight: el.weight,
         lifeSpan: el.lifeSpan,
         temperaments: temperament,
-      };
+      }); //Pedimos solo lo que necesitamos.
     });
 
-    // Busca por nombre e incluye temperamentos.
-
-    if (!createdName.length)
-      throw new Error("No existe tal raza"); //Si no lo encuentra, no existe.
-    else return dogs; //Si lo encuentra, devuelve dicha raza.
+    //En caso de que no exista en ninguno de los dos.
+  } else {
+    throw new Error("No se ha encontrado tal raza.");
   }
-
-  //Si se busca un perro dentro de la API.
-  const urlImage = await axios
-    .get("https://api.thedogapi.com/v1/breeds")
-    .then((res) => res.data); //Traemos las razas para encontrar la imagen (Ya que el ID solo trae referencia).
-
-  let dogs = [];
-  let dogImage;
-
-  dogsName.forEach((elem) => {
-    dogImage = urlImage.find(
-      (el) => el.reference_image_id === elem.reference_image_id
-    );
-
-    if (
-      !elem.id ||
-      !dogImage ||
-      !elem.name ||
-      !elem.height.metric ||
-      !elem.weight.metric ||
-      !elem.life_span ||
-      !elem.temperament
-    ) {
-      return;
-    }
-
-    dogs.push({
-      id: elem.id,
-      image: dogImage.image.url,
-      name: elem.name,
-      height: elem.height.metric,
-      weight: elem.weight.metric,
-      lifeSpan: elem.life_span,
-      temperaments: elem.temperament,
-    }); //Pedimos solo lo que necesitamos.
-  });
 
   return dogs;
 };
@@ -218,5 +232,3 @@ const postDogs = async (image, name, height, weight, lifeSpan, temper) => {
 //
 
 module.exports = { getDogs, getDogsID, getDogsName, postDogs };
-
-//Op.iLike es case sensitive (No importa si se busca con o sin mayusculas).

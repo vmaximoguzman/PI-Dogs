@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 //
 import Navbar from "../Navbar/Navbar";
 import style from "./Form.module.css";
@@ -122,7 +123,10 @@ const Form = () => {
   const handleTemper = (e) => {
     const indexTemper = temperaments.indexOf(e.target.value) + 1;
 
-    setDogTemperaments([...dogTemperaments, e.target.value]);
+    //*Evitamos repetir temperamentos.
+    if (!dogTemperaments.find((el) => e.target.value === el)) {
+      setDogTemperaments([...dogTemperaments, e.target.value]);
+    }
 
     setDog({
       ...dog,
@@ -155,8 +159,6 @@ const Form = () => {
       })
       .then((res) => console.log(res.data));
   };
-
-  console.log(dog);
 
   return (
     <>
@@ -287,8 +289,20 @@ const Form = () => {
           )}
 
           <button
+            type="submit"
             onClick={() => window.alert("Breed Created")}
-            className={style.submitBtn}
+            className={
+              Object.entries(errorsDog).length ||
+              Object.entries(errorsHeight).length ||
+              Object.entries(errorsWeight).length
+                ? style.disabledBtn
+                : style.submitBtn
+            }
+            disabled={
+              Object.entries(errorsDog).length ||
+              Object.entries(errorsHeight).length ||
+              Object.entries(errorsWeight).length
+            }
           >
             Submit
           </button>

@@ -15,6 +15,12 @@ const validationDog = (dog) => {
   if (dog.temper.length === 0) {
     errorsDog.temper = "This field is required.";
   }
+  if (dog.image) {
+    if (!dog.image.includes(".jpg") && !dog.image.includes(".png")) {
+      errorsDog.image =
+        "This field should be fill with a link ended in .jpg or .png";
+    }
+  }
 
   return errorsDog;
 };

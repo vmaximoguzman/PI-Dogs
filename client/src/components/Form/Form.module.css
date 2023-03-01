@@ -83,7 +83,7 @@
   background: none;
   border: 2px solid black;
   border-radius: 10px;
-  color: inherit;
+  color: black;
   font: inherit;
   line-height: normal;
   overflow: visible;
@@ -103,6 +103,28 @@
 
 .submitBtn:hover {
   font-weight: 600;
+}
+
+.disabledBtn {
+  background: none;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: black;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 5px;
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+
+  width: 90px;
+  aspect-ratio: 3/1;
+
+  cursor: not-allowed;
 }
 
 .formSelect {
@@ -149,4 +171,5 @@
 .validation {
   color: #ebe6dd;
   text-align: center;
+  padding: 5px;
 }
