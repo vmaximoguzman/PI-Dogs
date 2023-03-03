@@ -61,8 +61,6 @@ const getDogsID = async (id) => {
       .get(`https://api.thedogapi.com/v1/breeds/${id}?api_key=${API_KEY}`)
       .then((res) => res.data);
 
-    console.log(dogsID);
-
     const urlImage = await axios
       .get("https://api.thedogapi.com/v1/breeds")
       .then((res) => res.data); //Traemos las razas para encontrar la imagen (Ya que el ID solo trae referencia)
@@ -206,28 +204,28 @@ const getDogsName = async (name) => {
 };
 //POST DOGS
 const postDogs = async (image, name, height, weight, lifeSpan, temper) => {
+  let newDog;
+
   if (image) {
-    const createDog = await Dog.create({
+    newDog = await Dog.create({
       image,
       name,
       height,
       weight,
       lifeSpan,
     });
-    await createDog.addTemperaments(temper);
-
-    return createDog;
   } else {
-    const newDog = await Dog.create({
+    newDog = await Dog.create({
       name,
       height,
       weight,
       lifeSpan,
     });
-    await newDog.addTemperaments(temper);
-
-    return newDog;
   }
+
+  await newDog.addTemperaments(temper);
+
+  return newDog;
 };
 //
 

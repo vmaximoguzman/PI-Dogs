@@ -1,5 +1,4 @@
 const { Temperaments } = require("../db");
-const { Op } = require("sequelize");
 const axios = require("axios");
 const { API_KEY } = process.env;
 
@@ -39,7 +38,7 @@ const getTemper = async () => {
   //Agregamos todos los elementos de una a nuestra base de datos.
   await Temperaments.bulkCreate(bulk);
 
-  //Devuelvo los temperamentos (Modo de prueba).
+  //Devuelvo los temperamentos.
   return arrTemper;
 };
 
