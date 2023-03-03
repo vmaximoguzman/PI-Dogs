@@ -21,7 +21,7 @@ const Home = () => {
   const [dogsPerPage, setDogsPerPage] = useState([8]); //Dogs por página.
   const [currentPage, setCurrentPage] = useState(1); //Página de inicio.
 
-  const lastIndex = currentPage * dogsPerPage; //1 * 8 = 8 (Primeros 8 dogs)
+  const lastIndex = currentPage * dogsPerPage;
   const firstIndex = lastIndex - dogsPerPage;
   //*Pagination
 
