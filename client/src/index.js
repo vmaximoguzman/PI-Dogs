@@ -4,6 +4,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+
+// axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://pi-dogs-api-production-3fb1.up.railway.app/";
+//Para trabajar de manera local, utilizaremos la línea de arriba y esta quedará comentada. Cuando querramos pushear o deployear, usaremos la de abajo.
 
 ReactDOM.render(
   <BrowserRouter>

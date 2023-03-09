@@ -11,7 +11,7 @@ const Detail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/dogs/${dogId}`)
+      .get(`/dogs/${dogId}`)
       .then((res) => setDog(res.data))
       .catch((err) => console.log(err.message));
   }, []);

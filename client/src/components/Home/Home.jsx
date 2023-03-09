@@ -26,14 +26,12 @@ const Home = () => {
   //*Pagination
 
   useEffect(() => {
-    axios.get("http://localhost:3001/dogs").then((res) => {
+    axios.get("/dogs").then((res) => {
       setDogs(res.data);
       setDogTemper(res.data);
     });
 
-    axios
-      .get("http://localhost:3001/temper")
-      .then((res) => setTemper(res.data));
+    axios.get("/temper").then((res) => setTemper(res.data));
   }, []);
 
   //*Ordenar Z - A.
@@ -151,7 +149,7 @@ const Home = () => {
   //*Buscar Dog.
   const onSearch = (dog) => {
     axios
-      .get(`http://localhost:3001/dogs?name=${dog}`)
+      .get(`/dogs?name=${dog}`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setDogs(res.data);

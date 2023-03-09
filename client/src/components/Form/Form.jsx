@@ -58,9 +58,7 @@ const Form = () => {
   //-
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/temper")
-      .then((res) => setTemperaments(res.data));
+    axios.get("/temper").then((res) => setTemperaments(res.data));
   }, []);
 
   //*Name - Image - LifeSpan
@@ -153,11 +151,20 @@ const Form = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3001/dogs", {
+      .post("/dogs", {
         ...dog,
         lifeSpan: dog.lifeSpan + " years",
       })
       .then((res) => console.log(res.data));
+
+    setDog({
+      image: "",
+      name: "",
+      height: "",
+      weight: "",
+      lifeSpan: "",
+      temper: [],
+    });
   };
 
   return (
